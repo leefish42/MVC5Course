@@ -30,7 +30,6 @@ namespace MVC5Course.Models
         [Required(ErrorMessage = "請輸入價格")]
         [Range(10, 500, ErrorMessage = "價格範圍:10-500")]
         [DisplayName("價格")]
-        [DisplayFormat(DataFormatString ="{0:N0}")]
         public decimal? Price { get; set; }
         [Required]
         [DisplayName("狀態")]
