@@ -15,7 +15,7 @@ namespace MVC5Course.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.!";
+            ViewBag.Message = DateTime.Now;
 
             return View();
         }
