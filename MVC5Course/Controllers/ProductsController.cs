@@ -13,7 +13,6 @@ namespace MVC5Course.Controllers
 {
     public class ProductsController : Controller
     {
-        //private FabricsEntities4 db = new FabricsEntities4();
         ProductRepository ProRepo = RepositoryHelper.GetProductRepository();
 
         // GET: Products
@@ -64,6 +63,12 @@ namespace MVC5Course.Controllers
         // POST: Products/Create
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
+        /// <summary>
+        /// [Bind]為安全機制,只針對其中的欄位做判斷
+        /// 若使用ViewModel則不用此方法,因為可決定要用那些欄位
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
