@@ -232,6 +232,7 @@
       <DependentUpon>Fabrics.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Occupation.cs">
       <DependentUpon>Fabrics.tt</DependentUpon>
@@ -346,6 +347,7 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
