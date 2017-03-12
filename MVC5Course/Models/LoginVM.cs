@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MVC5Course.Models
 {
-    public class LoginVM
+    public class LoginVM : IValidatableObject
     {
         [Required]
         [DisplayName("帳號")]
@@ -18,5 +18,20 @@ namespace MVC5Course.Models
         [DisplayName("密碼")]
         [MinLength(6, ErrorMessage =("密碼不得少於六位"))]
         public string Password { get; set; }
+
+        public bool LoginCheck()
+        {
+            return (this.Username == "fish" && this.Password == "123456");
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if(!this.LoginCheck())
+            {
+                yield return new ValidationResult("登入失敗", new String[] { "Username" });
+                yield break;
+            }
+            yield return ValidationResult.Success;
+        }
     }
 }
