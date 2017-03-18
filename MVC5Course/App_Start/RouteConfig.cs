@@ -12,6 +12,13 @@ namespace MVC5Course
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            //直接宣告兩個MapRoute,就可以亂改路由
+            //最後要改回來,不然會當掉
+            //routes.MapRoute(
+            //    name: "NewDefault",
+            //    url: "{controller}.{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
 
             routes.MapRoute(
                 name: "Default",

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using MVC5Course.Models.Validations;
 
 namespace MVC5Course.Models
 {
@@ -12,6 +13,7 @@ namespace MVC5Course.Models
         [Required]
         [DisplayName("帳號")]
         [MinLength(3, ErrorMessage = ("帳號不得少於三位"))]
+        //[ProductNameIsNotAllow_Shit_String]
         public string Username { get; set; }
 
         [Required]
