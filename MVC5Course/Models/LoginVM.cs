@@ -16,7 +16,7 @@ namespace MVC5Course.Models
 
         [Required]
         [DisplayName("密碼")]
-        [MinLength(6, ErrorMessage =("密碼不得少於六位"))]
+        [MinLength(6, ErrorMessage =("密碼不得低於六位"))]
         public string Password { get; set; }
 
         public bool LoginCheck()
