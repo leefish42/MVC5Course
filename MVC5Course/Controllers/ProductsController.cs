@@ -7,36 +7,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
-using PagedList;
 
 namespace MVC5Course.Controllers
 {
     public class ProductsController : Controller
     {
-        ProductRepository ProRepo = RepositoryHelper.GetProductRepository();
+        private FabricsEntities5 db = new FabricsEntities5();
 
         // GET: Products
-        public ActionResult Index(string sortBy, string keyword, int pageNo = 1)
+        public ActionResult Index()
         {
-            var data = ProRepo.All().AsQueryable();
-
-            if(!String.IsNullOrEmpty(keyword))
-            {
-                data = data.Where(p => p.ProductName.Contains(keyword));
-            }
-
-            if(sortBy == "+price")
-            {
-                data = data.OrderBy(p => p.Price);
-            }
-            else
-            {
-                data = data.OrderByDescending(p => p.Price);
-            }
-
-            ViewBag.keyword = keyword;
-            
-            return View(data.ToPagedList(pageNo, 10));
+            return View(db.Product.ToList());
         }
 
         // GET: Products/Details/5
@@ -46,7 +27,7 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = ProRepo.Find(id.Value);
+            Product product = db.Product.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -63,20 +44,14 @@ namespace MVC5Course.Controllers
         // POST: Products/Create
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
-        /// <summary>
-        /// [Bind]為安全機制,只針對其中的欄位做判斷
-        /// 若使用ViewModel則不用此方法,因為可決定要用那些欄位
-        /// </summary>
-        /// <param name="product"></param>
-        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
             if (ModelState.IsValid)
             {
-                ProRepo.Add(product);
-                ProRepo.UnitOfWork.Commit();
+                db.Product.Add(product);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -90,7 +65,7 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = ProRepo.Find(id.Value);
+            Product product = db.Product.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -107,9 +82,8 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
-                var db = ProRepo.UnitOfWork.Context;
                 db.Entry(product).State = EntityState.Modified;
-                ProRepo.UnitOfWork.Commit();
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -122,7 +96,7 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = ProRepo.Find(id.Value);
+            Product product = db.Product.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -135,10 +109,19 @@ namespace MVC5Course.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = ProRepo.Find(id);
-            ProRepo.Delete(product);
-            ProRepo.UnitOfWork.Commit();
+            Product product = db.Product.Find(id);
+            db.Product.Remove(product);
+            db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

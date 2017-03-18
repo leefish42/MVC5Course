@@ -1,34 +1,21 @@
 ﻿@model IEnumerable<MVC5Course.Models.Product>
-@using PagedList
-@using PagedList.Mvc
 
 @{
-    ViewBag.Title = "商品資訊";
+    ViewBag.Title = "Index";
 }
 
-<h2>商品資訊</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<p>
-    @using (@Html.BeginForm("Index", "Products"))
-    {
-        <input type="search" name="keyword" value=""/>
-        <input type="submit" value="尋找" />
-    }
-</p>
-
-@Html.PagedListPager(Model as IPagedList, (p) => Url.Action("Index", new { pageNo = p}))
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
-            <a href="@Url.Action("Index", "Products", new { sortBy = "+price", keyword = ViewBag.keyword})">Up</a>            
             @Html.DisplayNameFor(model => model.Price)
-            <a href="@Url.Action("Index", "Products", new { sortBy = "-price", keyword = ViewBag.keyword})">Down</a>
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Active)
@@ -39,27 +26,26 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td class="@(item.Price > 100 ? "text-danger": "")">
-                NT$@Convert.ToInt16(item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stock)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ProductId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
-            </td>
-        </tr>
-    }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Active)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stock)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ProductId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ProductId })
+        </td>
+    </tr>
+}
 
 </table>
