@@ -10,13 +10,13 @@ namespace MVC5Course.Models
     public partial class Product
     {
     }
-    
+
     public partial class ProductMetaData
     {
         [Required]
         public int ProductId { get; set; }
-        
-        [StringLength(10, ErrorMessage="欄位長度不得大於 10 個字元")]
+
+        [StringLength(10, ErrorMessage = "欄位長度不得大於 10 個字元")]
         [Required(ErrorMessage = "請輸入商品名稱")]
         [DisplayName("商品名稱")]
         [ProductNameIsNotAllow_Shit_String]
@@ -35,6 +35,7 @@ namespace MVC5Course.Models
         [DisplayFormat(DataFormatString = "{0:N0}")]
         [DisplayName("商品股價")]
         [Required]
+        [Range(0, 9999)]
         public decimal? Stock { get; set; }
     
         public virtual ICollection<OrderLine> OrderLine { get; set; }

@@ -3,14 +3,27 @@
 {
     using (Html.BeginForm("LogOff", "Home", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">登出</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @{
+                    var login = TempData["LoginResult"] as MVC5Course.Models.LoginVM;
+                }
+                @{
+                    if (login != null)
+                    {
+                        <a href="#">@(login.Username) 登入成功!</a>
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    }
+                }
+                @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">登出</a></li>
+        </ul>
     }
 }
 else

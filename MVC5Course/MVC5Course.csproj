@@ -198,6 +198,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\紀錄Action執行時間.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MBController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
@@ -415,6 +417,10 @@
     <Content Include="Views\Shared\_Pager.cshtml" />
     <Content Include="Views\AR\Index.cshtml" />
     <Content Include="Views\AR\View3.cshtml" />
+    <Content Include="Views\MB\Index.cshtml" />
+    <Content Include="Views\MB\Form1.cshtml" />
+    <Content Include="Views\Shared\Error_ArgumentException.cshtml" />
+    <Content Include="Views\Shared\Error_DbEntityValidationException.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -427,6 +433,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ActionFilter\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <PropertyGroup>

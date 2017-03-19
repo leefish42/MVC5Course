@@ -8,23 +8,24 @@ using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
 using PagedList;
+using System.Data.Entity.Validation;
+using System.Web.UI;
 
 namespace MVC5Course.Controllers
 {
-    [Authorize]
+    [OutputCache(Duration = 60, Location = OutputCacheLocation.ServerAndClient)]
+    //[Authorize]
     public class ProductsController : BaseController
     {
-        //ProductRepository repo = RepositoryHelper.GetProductRepository();
-        // GET: Products
-        public ActionResult Index(string sort, string keyword, int page = 1)
+        private void DoSearchOnIndex(string sort, string keyword, int page)
         {
             var data = repoProduct.All().AsQueryable();
-            if(!String.IsNullOrEmpty(keyword))
+            if (!String.IsNullOrEmpty(keyword))
             {
                 data = data.Where(p => p.ProductName.Contains(keyword));
             }
 
-            if(sort == "++")
+            if (sort == "++")
             {
                 data = data.OrderBy(p => p.Price);
             }
@@ -34,7 +35,34 @@ namespace MVC5Course.Controllers
             }
 
             ViewBag.keyword = keyword;
-            return View(data.ToPagedList(page, 10));
+            ViewData.Model = data.ToPagedList(page, 10);
+        }
+
+        public ActionResult Index(string sort, string keyword, int page = 1)
+        {
+            DoSearchOnIndex(sort, keyword, page);
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Index(Product[] data, string sort, string keyword, int page = 1)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var item in data)
+                {
+                    var prod = repoProduct.Find(item.ProductId);
+                    prod.ProductName = item.ProductName;
+                    prod.Price = item.Price;
+                    prod.Active = item.Active;
+                    prod.Stock = item.Stock;
+                }
+                repoProduct.UnitOfWork.Commit();
+                return RedirectToAction("Index");
+
+            }
+            DoSearchOnIndex(sort, keyword, page);
+            return View();
         }
 
         // GET: Products/Details/5
@@ -95,16 +123,21 @@ namespace MVC5Course.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        [HandleError(View = "Error_DbEntityValidationException", ExceptionType = typeof(DbEntityValidationException))]
+        public ActionResult Edit(int id, FormCollection form)
         {
-            if (ModelState.IsValid)
+            var product = repoProduct.Find(id);
+            if (TryUpdateModel(product, new string[] { "ProductName", "Stock" }))
             {
-                var db = repoProduct.UnitOfWork.Context;
-                db.Entry(product).State = EntityState.Modified;
-                repoProduct.UnitOfWork.Commit();
-                return RedirectToAction("Index");
+                //var db = repoProduct.UnitOfWork.Context;
+                //db.Entry(product).State = EntityState.Modified;
+                //repoProduct.UnitOfWork.Commit();
+                //return RedirectToAction("Index");
             }
-            return View(product);
+
+            repoProduct.UnitOfWork.Commit();
+            return RedirectToAction("Index");
+            //return View(product);
         }
 
         // GET: Products/Delete/5

@@ -15,7 +15,7 @@ namespace MVC5Course.Models
         {
             //只從表面刪除,資料庫不刪除
             //return base.All().Where(p => false == p.IsDeleted && p.Stock < 1000);
-            return base.All().Where(p => p.Stock < 1000);
+            return base.All().Where(p => p.Stock > 1000);
         }
 
         public IQueryable<Product> All (bool showAll)
@@ -32,8 +32,9 @@ namespace MVC5Course.Models
 
         public override void Delete(Product entity)
         {
-            this.UnitOfWork.Context.Configuration.ValidateOnSaveEnabled = false;
+            //this.UnitOfWork.Context.Configuration.ValidateOnSaveEnabled = false;
             //entity.IsDeleted = true;
+            base.Delete(entity);
         }
     }
 

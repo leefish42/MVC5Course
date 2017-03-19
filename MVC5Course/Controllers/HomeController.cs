@@ -8,6 +8,7 @@ using System.Web.Security;
 
 namespace MVC5Course.Controllers
 {
+    [HandleError(View = "Error_ArgumentException", ExceptionType = typeof(ArgumentException))]
     public class HomeController : BaseController
     {
         public ActionResult Index()
@@ -15,9 +16,14 @@ namespace MVC5Course.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult About(int ex)
         {
             ViewBag.Message = DateTime.Now;
+
+            if (ex == 1)
+            {
+                throw new Exception("ex");
+            }
 
             return View();
         }
@@ -40,11 +46,13 @@ namespace MVC5Course.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginVM login, string ReturnUrl)
+        public ActionResult Login(LoginVM login, string ReturnUrl = "")
         {
             if(ModelState.IsValid)
             {
                 FormsAuthentication.RedirectFromLoginPage(login.Username, false);
+
+                TempData["LoginResult"] = login;
                 if (ReturnUrl.StartsWith("/"))
                 {
                     return Redirect(ReturnUrl);
