@@ -424,6 +424,7 @@
     <Content Include="Views\MB\Form1.cshtml" />
     <Content Include="Views\Shared\Error_ArgumentException.cshtml" />
     <Content Include="Views\Shared\Error_DbEntityValidationException.cshtml" />
+    <Content Include="Views\VT\RazorTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -438,7 +439,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\ActionFilter\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\VT\" />
     <Folder Include="Views\僅在本機開發測試用\" />
     <Folder Include="Views\設定本控制器常用的ViewBag資料\" />
   </ItemGroup>
