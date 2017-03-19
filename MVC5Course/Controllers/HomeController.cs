@@ -1,4 +1,5 @@
-﻿using MVC5Course.Models;
+﻿using MVC5Course.ActionFilters;
+using MVC5Course.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,10 @@ namespace MVC5Course.Controllers
             return View();
         }
 
+        [設定本控制器常用的ViewBag資料]
         public ActionResult About(int ex)
         {
-            ViewBag.Message = DateTime.Now;
+            //ViewBag.Message = DateTime.Now;
 
             if (ex == 1)
             {
@@ -28,13 +30,15 @@ namespace MVC5Course.Controllers
             return View();
         }
 
+        [設定本控制器常用的ViewBag資料]
+        [僅在本機開發測試用]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            //ViewBag.Message = "Your contact page.";
 
             return View();
         }
-
+        [設定本控制器常用的ViewBag資料]
         public ActionResult Test()
         {
             return View();

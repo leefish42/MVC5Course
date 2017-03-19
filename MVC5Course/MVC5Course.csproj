@@ -198,6 +198,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\僅在本機開發測試用.cs" />
     <Compile Include="ActionFilters\紀錄Action執行時間.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -213,6 +214,8 @@
     <Compile Include="Controllers\MBController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="ActionFilters\設定本控制器常用的ViewBag資料.cs" />
+    <Compile Include="Controllers\VTController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -435,6 +438,9 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\ActionFilter\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\VT\" />
+    <Folder Include="Views\僅在本機開發測試用\" />
+    <Folder Include="Views\設定本控制器常用的ViewBag資料\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
