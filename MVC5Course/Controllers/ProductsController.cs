@@ -13,7 +13,7 @@ using System.Web.UI;
 
 namespace MVC5Course.Controllers
 {
-    [OutputCache(Duration = 60, Location = OutputCacheLocation.ServerAndClient)]
+    //[OutputCache(Duration = 60, Location = OutputCacheLocation.ServerAndClient)]
     //[Authorize]
     public class ProductsController : BaseController
     {
@@ -68,6 +68,8 @@ namespace MVC5Course.Controllers
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
+            /*在Edit下檢視所有項目
+            作法一:用PartialView方式,直接新增一個PartialView選好範本,類別等用部分檢視且不用Layout即可完成*/
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -78,6 +80,17 @@ namespace MVC5Course.Controllers
                 return HttpNotFound();
             }
             return View(product);
+        }
+
+        public ActionResult ProductOrderlines(int id)
+        {
+            /*作法二:利用Action的方式呈現資訊*/
+            Product product = repoProduct.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product.OrderLine);
         }
 
         // GET: Products/Create

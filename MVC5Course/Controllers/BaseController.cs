@@ -14,9 +14,9 @@ namespace MVC5Course.Controllers
         //讓所有Controller繼承BaseController,用到Repository的直接用"repoProduct."即可
         public ProductRepository repoProduct = RepositoryHelper.GetProductRepository();
 
-        protected override void HandleUnknownAction(string actionName)
-        {
-            this.Redirect("/").ExecuteResult(this.ControllerContext);
-        }
+        //protected override void HandleUnknownAction(string actionName)
+        //{
+        //    this.Redirect("/").ExecuteResult(this.ControllerContext);
+        //}
     }
 }
