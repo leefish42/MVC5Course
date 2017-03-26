@@ -1,9 +1,10 @@
 ﻿@model MVC5Course.Models.Client
-
-@{
-    Layout = null;
+@{ 
+    if (IsAjax)
+    {
+        Layout = "";
+    }
 }
-
 <!DOCTYPE html>
 
 <html>

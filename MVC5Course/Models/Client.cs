@@ -28,10 +28,14 @@ namespace MVC5Course.Models
 
         [UIHint("性別顯示")]
         public string Gender { get; set; }
+
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> DateOfBirth { get; set; }
 
         [UIHint("好讚讚")]
         public Nullable<double> CreditRating { get; set; }
+
+
         public string XCode { get; set; }
         public Nullable<int> OccupationId { get; set; }
         public string TelephoneNumber { get; set; }

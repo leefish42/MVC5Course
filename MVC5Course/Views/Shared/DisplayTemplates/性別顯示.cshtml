@@ -1,9 +1,13 @@
 ﻿@model String
-    @if(Model == "M")
-    {
-        @:男生
-    }
-    else
-    {
-        @:女生
-    }
+@if (Model == "M")
+{
+    @:男生
+}
+else if (Model == "F")
+{
+    @:女生
+}
+else
+{
+    @:未知
+}
