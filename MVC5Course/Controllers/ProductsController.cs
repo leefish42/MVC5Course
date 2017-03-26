@@ -19,27 +19,35 @@ namespace MVC5Course.Controllers
     {
         private void DoSearchOnIndex(string sort, string keyword, int page)
         {
-            var data = repoProduct.All().AsQueryable();
+            var all = repoProduct.All().AsQueryable();
             if (!String.IsNullOrEmpty(keyword))
             {
-                data = data.Where(p => p.ProductName.Contains(keyword));
+                all = all.Where(p => p.ProductName.Contains(keyword));
             }
 
             if (sort == "++")
             {
-                data = data.OrderBy(p => p.Price);
+                all = all.OrderBy(p => p.Price);
             }
             else
             {
-                data = data.OrderByDescending(p => p.Price);
+                all = all.OrderByDescending(p => p.Price);
             }
 
             ViewBag.keyword = keyword;
-            ViewData.Model = data.ToPagedList(page, 10);
+            ViewData.Model = all.ToPagedList(page, 10);
         }
 
         public ActionResult Index(string sort, string keyword, int page = 1)
         {
+            //靜態下拉選單
+            ViewBag.FilterActive = new SelectList(new List<string> {"True", "False"});
+
+            //動態下拉選單
+            //var activeOptions = repoProduct.All().Select(p => p.Active.HasValue ? p.Active.Value.ToString() : "False").Distinct().ToString();
+            //ViewBag.FilterActive = new SelectList(activeOptions);
+            
+            //DoSearch拉至外面
             DoSearchOnIndex(sort, keyword, page);
             return View();
         }
@@ -61,6 +69,14 @@ namespace MVC5Course.Controllers
                 return RedirectToAction("Index");
 
             }
+
+            //靜態下拉選單
+            //ViewBag.FilterActive = new SelectList(new List<string> {"True", "False"});
+
+            //動態下拉選單
+            //var activeOptions = repoProduct.All().Select(p => p.Active.HasValue ? p.Active.Value.ToString() : "False").Distinct().ToString();
+            //ViewBag.FilterActive = new SelectList(activeOptions);
+
             DoSearchOnIndex(sort, keyword, page);
             return View();
         }
@@ -140,7 +156,7 @@ namespace MVC5Course.Controllers
         public ActionResult Edit(int id, FormCollection form)
         {
             var product = repoProduct.Find(id);
-            if (TryUpdateModel(product, new string[] { "ProductName", "Stock" }))
+            if (TryUpdateModel(product, new string[] { "ProductName", "Stock", "Active" }))
             {
                 //var db = repoProduct.UnitOfWork.Context;
                 //db.Entry(product).State = EntityState.Modified;

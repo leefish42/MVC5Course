@@ -11,6 +11,8 @@
 </p>
 
 <p>
+    @Html.DropDownList("FilterActive", null, "請選擇", new { onchange = ""})
+
     @using (Html.BeginForm())
     {
         @Html.TextBox("keyword")
@@ -29,9 +31,9 @@
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
             <th>
-                <a href="@Url.Action("Index", "Products", new { sort = "++", keyword = ViewBag.keyword })>遞增</a>
+                <a href="@Url.Action("Index", "Products", new { sort = "++", keyword = ViewBag.keyword })">↑</a>
                 @Html.DisplayNameFor(model => model.Price)
-                <a href="@Url.Action("Index", "Products", new { sort = "--", keyword = ViewBag.keyword })>遞減</a>
+                <a href="@Url.Action("Index", "Products", new { sort = "--", keyword = ViewBag.keyword })">↓</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Active)
